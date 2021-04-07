@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from itertools import accumulate
+from math import sqrt
 
 n = int(input('Wpisz rozmiar tablicy: '))
 Xi = list(map(int, input(
@@ -37,11 +38,9 @@ for i, j in zip(Xi, Fi):
     while j != count:
         Detailed_series.append(i)
         count += 1
-print('Szereg szczegolowy:', Detailed_series)
+# print('Szereg szczegolowy:', Detailed_series)
 dict_Detailed_series = {'Xi': Detailed_series}
-# print(dict_Detailed_series)
-pd_Detailed_series = pd.DataFrame(
-    data=dict_Detailed_series, dtype=np.int64)
+pd_Detailed_series = pd.DataFrame(data=dict_Detailed_series, dtype=np.int64)
 # print(pd_Detailed_series)
 # ???
 
@@ -52,22 +51,45 @@ pd_start_dict = pd.DataFrame(data=start_dict, dtype=np.int64)
 # Descriptive measures *****************************************************************************
 
 # Mean ------------------------------------------
-arithmeticAverage = pd_start_dict.loc[:, 'FiXi'].sum() / sum(Fi)
-print('Srednia arytmetyczna:', arithmeticAverage)
+avarage = pd_start_dict.loc[:, 'FiXi'].sum() / sum(Fi)
+print('Srednia arytmetyczna:', avarage)
 
 # Median ----------------------------------------
 median = pd_Detailed_series.loc[:, 'Xi'].median()
 print('Mediana:', median)
 
 # Mode ------------------------------------------
-#mode = pd_Detailed_series['Xi'].mode()
+# mode = pd_Detailed_series['Xi'].mode()
 mode = pd_Detailed_series.loc[:, 'Xi'].mode().values[0]
-#mode.index = ['Mo: ']
+# mode.index = ['Mo: ']
 print('Modalna:', mode)
 
-# Добавим все суммы в конце списка *****************************************************************
+# Variance --------------------------------------
+variance = (1 / pd_start_dict.loc[:, 'Fi'].sum()) * \
+    pd_start_dict.loc[:, 'FiXi2'].sum() - pow((avarage), 2)
+print('Wariancja:', variance)
+
+# std -------------------------------------------
+std = sqrt(variance)
+print('Odchylenie standardowe:', std)
+
+# cv --------------------------------------------
+cv = std / abs(avarage) * 100
+print('Wspolczynnik zmiennosci:', cv, '%')
+
+# *****************************************************************
+print(pd_start_dict.fillna(0).astype(int))
+
 row_sum = pd.Series({'Fi': sum(Fi), 'FiXi': sum(FiXi), 'FiXi2': sum(FiXi2)},
-                    name='sum')
+                    name='sum').fillna(
+    0).astype(int).replace(0, '-', regex=True)
+
 pd_start_dict = pd_start_dict.append(row_sum)
-# Сделать все числа из float в int
+
+# float to int
+# pd_start_dict = pd_start_dict.fillna(0).astype(int)
+
+# x = pd_start_dict.loc[['sum']].fillna(
+#     0).astype(int).replace(0, '-', regex=True)
+# pd_start_dict = pd_start_dict.append(x)
 print(pd_start_dict)
