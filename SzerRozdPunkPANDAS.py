@@ -3,12 +3,11 @@ import pandas as pd
 from itertools import accumulate
 
 n = int(input('Wpisz rozmiar tablicy: '))
-Xi = list(
-    map(int, input('Wpisz wartosci cechy (xi) oddzielone spacja: ').strip().split())
+Xi = list(map(int, input(
+    'Wpisz wartosci cechy (xi) oddzielone spacja: ').strip().split())
 )[:n]
-
-Fi = list(
-    map(int, input('Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split())
+Fi = list(map(int, input(
+    'Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split())
 )[:n]
 
 # Xi, Fi ---------------------------------------------------
@@ -35,13 +34,18 @@ start_dict.update({'FiKu': FiKu})
 Detailed_series = []
 for i, j in zip(Xi, Fi):
     count = 0
-    while (j != count):
+    while j != count:
         Detailed_series.append(i)
         count += 1
-print(Detailed_series)
+print('Szereg szczegolowy:', Detailed_series)
+dict_Detailed_series = {'Xi': Detailed_series}
+# print(dict_Detailed_series)
+pd_Detailed_series = pd.DataFrame(
+    data=dict_Detailed_series, dtype=np.int64)
+# print(pd_Detailed_series)
 # ???
 
-
+# Создаем фрейм ************************************************************************************
 pd_start_dict = pd.DataFrame(data=start_dict, dtype=np.int64)
 # print(pd_start_dict, '\n')
 
@@ -49,11 +53,21 @@ pd_start_dict = pd.DataFrame(data=start_dict, dtype=np.int64)
 
 # Mean ------------------------------------------
 arithmeticAverage = pd_start_dict.loc[:, 'FiXi'].sum() / sum(Fi)
-print('Srednia arytmetyczna: ', arithmeticAverage, '\n')
+print('Srednia arytmetyczna:', arithmeticAverage)
 
-# Добавим все суммы в конце списка
-row_sum = pd.Series({'Fi': sum(Fi), 'FiXi': sum(FiXi),
-                    'FiXi2': sum(FiXi2)}, name='sum')
+# Median ----------------------------------------
+median = pd_Detailed_series.loc[:, 'Xi'].median()
+print('Mediana:', median)
+
+# Mode ------------------------------------------
+#mode = pd_Detailed_series['Xi'].mode()
+mode = pd_Detailed_series.loc[:, 'Xi'].mode().values[0]
+#mode.index = ['Mo: ']
+print('Modalna:', mode)
+
+# Добавим все суммы в конце списка *****************************************************************
+row_sum = pd.Series({'Fi': sum(Fi), 'FiXi': sum(FiXi), 'FiXi2': sum(FiXi2)},
+                    name='sum')
 pd_start_dict = pd_start_dict.append(row_sum)
 # Сделать все числа из float в int
 print(pd_start_dict)
