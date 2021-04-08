@@ -1,17 +1,7 @@
-print('''
-
-   _____ __        __             __        __                        _                         
-  / ___// /_____ _/ /___  _______/ /___  __/ /______ _   ____  ____  (_)________ _      ______ _
-  \__ \/ __/ __ `/ __/ / / / ___/ __/ / / / //_/ __ `/  / __ \/ __ \/ / ___/ __ \ | /| / / __ `/
- ___/ / /_/ /_/ / /_/ /_/ (__  ) /_/ /_/ / ,< / /_/ /  / /_/ / /_/ / (__  ) /_/ / |/ |/ / /_/ / 
-/____/\__/\__,_/\__/\__, /____/\__/\__, /_/|_|\__,_/   \____/ .___/_/____/\____/|__/|__/\__,_/  
-                   /____/         /____/                   /_/                                  
-
-''')
-
+import math
+import os
 import numpy as np
 import pandas as pd
-import math
 from itertools import accumulate
 from tabulate import tabulate
 
@@ -48,11 +38,13 @@ for i, j in zip(Xi, Fi):
     while j != count:
         cumulative_series.append(i)
         count += 1
+
 cumulative_series_dict = {'Xi': cumulative_series}
 df_cumulative_series = pd.DataFrame(data=cumulative_series_dict, dtype=np.int64)
 
 # Сreating a dataframe
 df_main = pd.DataFrame(data=main_dict, dtype=np.int64)
+df_main.index.name = 'id'
 
 # Descriptive measures *****************************************************************************
 # Mean ------------------------------------------
@@ -71,7 +63,7 @@ cv = round(std / abs(avarage) * 100, 2)
 df_row_sum = pd.DataFrame(
     {'Fi': sum(Fi), 'FiXi': sum(FiXi), 'FiXi2': sum(FiXi2)}, 
     index=['sum']
-).fillna(0).astype(int)
+).astype(int)
 
 df_descriptive_measures = pd.DataFrame(
     {'srednia': avarage, 'Me': median,
@@ -83,3 +75,4 @@ df_descriptive_measures = pd.DataFrame(
 display(df_main)
 display(df_row_sum)
 display(df_descriptive_measures)
+os.system("pause")
