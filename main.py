@@ -1,1 +1,1 @@
-import SzerRozdPunk
+import SzerRozdPunkPANDAS
