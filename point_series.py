@@ -29,7 +29,10 @@ FiXi2 = [i * j for i, j in zip(Xi2, Fi)]
 # FiKu -----------------------------------------------------
 FiKu = list(accumulate(Fi))
 
-main_dict.update({'Fi * Xi': FiXi, 'Xi^2': Xi2, 'Fi * Xi^2': FiXi2, 'Fi Kum': FiKu})
+main_dict.update(
+    {'Fi * Xi': FiXi, 'Xi^2': Xi2,
+    'Fi * Xi^2': FiXi2, 'Fi Kum': FiKu}
+)
 
 # Comulative series ----------------------------------------
 cumulative_series = []
@@ -54,7 +57,7 @@ median = round(df_cumulative_series.loc[:, 'Xi'].median(), 2)
 # Mode ------------------------------------------
 mode = df_cumulative_series.loc[:, 'Xi'].mode().values[0]
 # Variance --------------------------------------
-variance = round((1 / df_main.loc[:, 'Fi'].sum()) * df_main.loc[:, 'Fi * Xi^2'].sum() - pow((avarage), 2), 2)
+variance = round((1 / df_main.loc[:, 'Fi'].sum()) * df_main.loc[:, 'Fi * Xi^2'].sum() - pow((avarage), 2), 4)
 # std -------------------------------------------
 std = round(math.sqrt(variance), 2)
 # cv --------------------------------------------
@@ -63,14 +66,14 @@ cv = round(std / abs(avarage) * 100, 2)
 df_row_sum = pd.DataFrame(
     {'Fi': sum(Fi), 'Fi * Xi': sum(FiXi), 'Fi * Xi2': sum(FiXi2)}, 
     index=['sum']
-).astype(int)
+).astype(np.float64)
 
 df_descriptive_measures = pd.DataFrame(
     {'srednia': avarage, 'Me': median,
     'Mo': mode, 'wariancja': variance,
     'od standardowe': std, 'wsp zmiennosci': cv },
     index=['measures']
-).astype(float)
+).astype(np.float64)
 
 display(df_main)
 display(df_row_sum)
