@@ -120,7 +120,10 @@ df_interval_descriptive_measures = pd.DataFrame(
     index=['measures']
 ).astype(np.float64)
 
+df_interval.to_csv('interval_series.csv', encoding='utf-8')
+
 display(df_interval) 
 display(df_interval_row_sum)
 display(df_interval_descriptive_measures)
+
 os.system("pause") 
