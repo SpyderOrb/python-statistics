@@ -6,13 +6,10 @@ import pandas as pd
 from itertools import accumulate, product
 from tabulate import tabulate
 
-
 def display(df):
     print(' ')
     print(tabulate(df, headers='keys', tablefmt='github'))
     
-# !!! input all 'left' values and find interval 
-
 # n = int(input('Wpisz rozmiar tablicy: '))
 # Xi_lp = list(map(int, input(
 #     'Wpisz wartosci cechy (xi) oddzielone spacja: ').strip().split()))[:n]
@@ -22,8 +19,8 @@ def display(df):
 #     'Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split()))[:n]
 
 Xi_lp = [20, 25, 30, 35, 40]
-Xi_rp = [25, 30, 35, 40, 45]
-Xi_length_range = Xi_rp[0] - Xi_lp[0]
+Xi_length_range = int(input('Input the interval: '))
+Xi_rp = [i + Xi_length_range for i in Xi_lp]
 
 # Xi_avg -----------------------------------------------------
 Xi_avg = [(i + j) / 2 for i, j in zip(Xi_lp, Xi_rp)]
@@ -48,42 +45,84 @@ df_interval.index.name ='Xi'
 
 # lower limit of the modal range
 # ! function ???
-max_Fi_value = max(Fi)
-max_Fi_index = Fi.index(max_Fi_value)
+max_Fi_value = max(Fi) # 20
+max_Fi_index = Fi.index(max_Fi_value) # 4 (last index)
 
-prev_max_Fi_index = max_Fi_index - 1
-prev_max_Fi_value = Fi[prev_max_Fi_index]
+prev_max_Fi_index = max_Fi_index - 1 
+try:
+    prev_max_Fi_value = Fi[prev_max_Fi_index]
+except IndexError:
+    prev_max_Fi_value = 0
 
 next_max_Fi_index = max_Fi_index + 1
-next_max_Fi_value = Fi[next_max_Fi_index]
-
+try:
+    next_max_Fi_value = Fi[next_max_Fi_index]
+except IndexError:
+    next_max_Fi_value = 0
 Xm = Xi_lp[max_Fi_index]
 
-# Descriptive measures ********łł*********************************************************************
+# Descriptive measures ********************************************************************************
 # Mean ------------------------------------------
 avarage = round(df_interval.loc[:, 'Fi * Xi\''].sum() / sum(Fi), 2)
-print('avg: ', avarage)
+print('avg:', avarage)
 # Mode ------------------------------------------
 mode = round(Xm + ((max_Fi_value - prev_max_Fi_value) / ((max_Fi_value - prev_max_Fi_value) + (max_Fi_value - next_max_Fi_value))) * Xi_length_range, 2)
-print('mode: ', mode)
+print('mode:', mode)
 # Median ----------------------------------------
+# ! function (n_div) ???
 n_div_2 = sum(Fi) / 2
 for i in FiKu:
     if n_div_2 < i:
-        Xs_value = i
+        Xs_value = i # 53
         break
 
-Xs_index = FiKu.index(Xs_value)
+Xs_index = FiKu_index = FiKu.index(Xs_value)
 Xs = Xi_lp[Xs_index]
-# median = Xs + ((()) / Fi[])
 
-print(n_div_2)
-print(Xs)
+sum_preceding_Fiku_index = FiKu_index - 1
+sum_preceding_Fiku = FiKu[sum_preceding_Fiku_index]
+print('sum_preceding_Fiku median:', sum_preceding_Fiku) 
+print('N / 2 median:',n_div_2)
+print('Xs median:', Xs)
 
+median = round(Xs + (((n_div_2 - sum_preceding_Fiku) * Xi_length_range) / Fi[Xs_index]), 2)
+print('median:',median)
+# Lower quartile ---------------------------------
+n_div_4 = sum(Fi) / 4
+for i in FiKu:
+    if n_div_4 < i:
+        Xs_value = i # 53
+        break
 
-# median = round(df_cumulative_series.loc[:, 'Xi'].median(), 2)
+Xs_index = FiKu_index = FiKu.index(Xs_value)
+Xs = Xi_lp[Xs_index]
 
+sum_preceding_Fiku_index = FiKu_index - 1
+sum_preceding_Fiku = FiKu[sum_preceding_Fiku_index]
+print('sum_preceding_Fiku Q1:', sum_preceding_Fiku) 
+print('N / 4 Q1:', n_div_4)
+print('Xs Q1:', Xs)
 
+Q1 = round(Xs + (((n_div_4 - sum_preceding_Fiku) * Xi_length_range) / Fi[Xs_index]), 2)
+print('Lower quartile:',Q1)
+# Upper quartile ---------------------------------
+n_div_34 = sum(Fi) * 3 / 4
+for i in FiKu:
+    if n_div_34 < i:
+        Xs_value = i # 53
+        break
+
+Xs_index = FiKu_index = FiKu.index(Xs_value)
+Xs = Xi_lp[Xs_index]
+
+sum_preceding_Fiku_index = FiKu_index - 1
+sum_preceding_Fiku = FiKu[sum_preceding_Fiku_index]
+print('sum_preceding_Fiku Q3:', sum_preceding_Fiku) 
+print('N * 3 / 4 Q3:', n_div_34)
+print('Xs Q3:', Xs)
+
+Q3 = round(Xs + (((n_div_34 - sum_preceding_Fiku) * Xi_length_range) / Fi[Xs_index]), 2)
+print('Upper quartile:',Q3)
 
 display(df_interval) 
 os.system("pause")
