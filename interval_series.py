@@ -35,7 +35,7 @@ Fi = list(map(int, input(
 
 # Xi_avg -----------------------------------------------------
 Xi_avg = [(i + j) / 2 for i, j in zip(Xi_lp, Xi_rp)]
-# creating interval dict
+    # creating interval dict
 interval_dict = {'Fi': Fi, 'Xi\'': Xi_avg}
 # FiXi_avg ---------------------------------------------------
 FiXi_avg = [i * j for i, j in zip(Xi_avg, Fi)]
