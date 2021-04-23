@@ -15,14 +15,21 @@ from tabulate import tabulate
 Xi = [16, 25, 24, 50, 60]
 Yi = [95, 163, 250, 297, 335]
 
-# creating correlation dict
-corr_dict = {'Xi': Xi, 'Yi':Yi}
-# creating correlation dataframe
-# df_correlation = pd.DataFrame(corr_dict, dtype=np.float64)
 df_correlation = pd.DataFrame(list(zip(Xi, Yi)), columns=['Xi', 'Yi'])
-# Xi, Yi avarages
+# Xi, Yi averages
 Xi_avg = df_correlation.loc[:, 'Xi'].mean()
 Yi_avg = df_correlation.loc[:, 'Yi'].mean()
+# Xi - Xi_avg, Yi - Yi_avg
+Xi_diff_Xi_avg = [(i - Xi_avg) for i in Xi]
+Yi_diff_Yi_avg = [(i - Yi_avg) for i in Yi]
+df_correlation['Xi-Xi_avg'] = Xi_diff_Xi_avg
+df_correlation['Yi-Yi_avg'] = Yi_diff_Yi_avg
+# (Xi - Xi_avg)^2, (Yi - Yi_avg)^2
+Xi_diff_Xi_avg2 = [i**2 for i in Xi_diff_Xi_avg]
+Yi_diff_Yi_avg2 = [i**2 for i in Yi_diff_Yi_avg]
+df_correlation['Xi-Xi_avg ^2'] = Xi_diff_Xi_avg2
+df_correlation['Yi-Yi_avg ^2'] = Yi_diff_Yi_avg2
+# df_correlation['Xi-Xi_avg'] = Xi_diff_Xi_avg
 # Xi_diff_Xi_avg = []
 # Yi_diff_Yi_avg = []
 
@@ -44,4 +51,3 @@ print(col_Yi)
 print(df_correlation, '\n')
 print(Xi_avg, '\n')
 print(Yi_avg)
-
