@@ -16,19 +16,33 @@ Xi = [16, 25, 24, 50, 60]
 Yi = [95, 163, 250, 297, 335]
 
 df_correlation = pd.DataFrame(list(zip(Xi, Yi)), columns=['Xi', 'Yi'])
-# Xi, Yi averages
+# Xi, Yi averages -----------------------------------------------------
 Xi_avg = df_correlation.loc[:, 'Xi'].mean()
 Yi_avg = df_correlation.loc[:, 'Yi'].mean()
-# Xi - Xi_avg, Yi - Yi_avg
+
+# Xi - Xi_avg, Yi - Yi_avg --------------------------------------------
 Xi_diff_Xi_avg = [(i - Xi_avg) for i in Xi]
 Yi_diff_Yi_avg = [(i - Yi_avg) for i in Yi]
 df_correlation['Xi-Xi_avg'] = Xi_diff_Xi_avg
 df_correlation['Yi-Yi_avg'] = Yi_diff_Yi_avg
-# (Xi - Xi_avg)^2, (Yi - Yi_avg)^2
-Xi_diff_Xi_avg2 = [i**2 for i in Xi_diff_Xi_avg]
-Yi_diff_Yi_avg2 = [i**2 for i in Yi_diff_Yi_avg]
-df_correlation['Xi-Xi_avg ^2'] = Xi_diff_Xi_avg2
-df_correlation['Yi-Yi_avg ^2'] = Yi_diff_Yi_avg2
+
+# (Xi - Xi_avg) * (Yi - Yi_avg) ---------------------------------------
+Xi_diff_Xi_avg_MULT_Yi_diff_Yi_avg = [i * j for i, j in zip(Xi_diff_Xi_avg, Yi_diff_Yi_avg)]
+df_correlation['Xi-Xi_avg * Yi-Yi_avg'] = Xi_diff_Xi_avg_MULT_Yi_diff_Yi_avg
+
+# (Xi - Xi_avg)^2, (Yi - Yi_avg)^2 ------------------------------------
+Xi_diff_Xi_avg2 = [i ** 2 for i in Xi_diff_Xi_avg]
+Yi_diff_Yi_avg2 = [i ** 2 for i in Yi_diff_Yi_avg]
+df_correlation['Xi-Xi_avg^2'] = Xi_diff_Xi_avg2
+df_correlation['Yi-Yi_avg^2'] = Yi_diff_Yi_avg2
+
+df_correlation_row_sum = pd.DataFrame(
+    {'Xi-Xi_avg * Yi-Yi_avg': sum(Xi_diff_Xi_avg_MULT_Yi_diff_Yi_avg),
+     'Xi-Xi_avg^2': sum(Xi_diff_Xi_avg2),
+     'Yi-Yi_avg^2': sum(Yi_diff_Yi_avg2)
+     },
+    index=['sum']
+)
 # df_correlation['Xi-Xi_avg'] = Xi_diff_Xi_avg
 # Xi_diff_Xi_avg = []
 # Yi_diff_Yi_avg = []
@@ -40,14 +54,10 @@ df_correlation['Yi-Yi_avg ^2'] = Yi_diff_Yi_avg2
 #     columnSeriesObj = df_correlation[column]
 #     Yi_diff_Yi_avg.append(columnSeriesObj - Yi_avg)
 
-col_Xi = df_correlation['Xi'].tolist()
-col_Yi = df_correlation['Yi'].tolist()
-
 # df_correlation = df_correlation.append({'Xi - Xi_avg':Xi_diff_Xi_avg})
 # df_Xi_diff_Xi_avg = pd.DataFrame(Xi_diff_Xi_avg)
 # df_correlation['Xi - Xi_avg'] = Xi_diff_Xi_avg
-print(col_Xi)
-print(col_Yi)
+
 print(df_correlation, '\n')
-print(Xi_avg, '\n')
-print(Yi_avg)
+print(df_correlation_row_sum, '\n')
+print('Xi srednia: ', Xi_avg, '|', 'Yi srednia:', Yi_avg)

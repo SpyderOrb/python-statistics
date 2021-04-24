@@ -75,8 +75,8 @@ try:
     next_max_Fi_value = Fi[next_max_Fi_index]
 except IndexError:
     next_max_Fi_value = 0
-Xm = Xi_lp[max_Fi_index]
 
+Xm = Xi_lp[max_Fi_index]
 # Descriptive measures ********************************************************************************
 # Mean ------------------------------------------
 average = round(df_interval.loc[:, 'Fi * Xi\''].sum() / sum(Fi), 2)
