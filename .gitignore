@@ -1,4 +1,8 @@
 # Jupyter 
 /helloJupyteripynb.ipynb
-# scsv file
+# csv file
 /interval_series.csv
+# vscode file
+/.vscode
+# pycharm file
+/.idea
