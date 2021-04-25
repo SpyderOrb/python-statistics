@@ -7,16 +7,18 @@ from tabulate import tabulate
 
 
 def display(df):
+    print('\n')
     print(' ')
     print(tabulate(df, headers='keys', tablefmt='github'))
 
 
 def run_point_series():
-    n = int(input('Wpisz rozmiar tablicy: '))
+    print('\n')
+    n = int(input('  Wpisz rozmiar tablicy: '))
     Xi = list(map(int, input(
-        'Wpisz wartosci cechy (xi) oddzielone spacja: ').strip().split()))[:n]
+        '  Wpisz wartosci cechy (xi) oddzielone spacja: ').strip().split()))[:n]
     Fi = list(map(int, input(
-        'Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split()))[:n]
+        '  Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split()))[:n]
     # Xi, Fi ---------------------------------------------------
     main_dict = {'Xi': Xi, 'Fi': Fi}
     # FiXi -----------------------------------------------------
@@ -66,16 +68,16 @@ def run_point_series():
 
     df_row_sum = pd.DataFrame(
         {'Fi': sum(Fi), 'Fi * Xi': sum(FiXi), 'Fi * Xi2': sum(FiXi2)},
-        index=['sum']
+        index=['suma wszystkich wartosci']
     ).astype(np.float64)
 
     df_descriptive_measures = pd.DataFrame(
         {'srednia': avarage, 'Me': median,
          'Mo': mode, 'wariancja': variance,
          'od standardowe': std, 'wsp zmiennosci': cv},
-        index=['measures']
+        index=['miary statystyki']
     ).astype(np.float64)
-
+    # df_main.style.hide_index()
     display(df_main)
     display(df_row_sum)
     display(df_descriptive_measures)

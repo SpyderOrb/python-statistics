@@ -16,9 +16,9 @@ def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def go_back(argument):
-    print('\nEnter \'y\' if you want to go back')
-    argument = input()
+def go_back(argument='y'):
+    print('\nWpisz \'y\' potem nacisnij \'Enter\' jesli chcesz wrocic do menu glownego')
+    argument = input(':')
     funcmap = {'y': main()}
     if (argument == 'y'):
         funcmap['y']
@@ -39,14 +39,23 @@ def main():
     argument = int(input('    Podaj argument [1 lub 2]: '))
     if (argument == 1):
         cls()
-        point_series.run_point_series()
+        try:
+            point_series.run_point_series()
+        except Exception as ex:
+            print('\n\t', ex, '---> (Innymi slowy, wystapil blad, zacznij od nowa...)')
+            go_back()
         go_back(argument)
     elif (argument == 2):
         cls()
-        interval_series.run_interval_series()
+        try:
+            interval_series.run_interval_series()
+        except Exception as ex:
+            print('\n\t', ex, '---> (Innymi slowy, wystapil blad, zacznij od nowa...)')
+            go_back()
         go_back(argument)
     else:
         print('nieznany argument, sprobuj ponownie...')
+        go_back()
     print('\n')
     os.system("pause")
 

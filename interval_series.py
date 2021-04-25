@@ -9,6 +9,7 @@ from tabulate import tabulate
 
 
 def display(df):
+    print('\n')
     print(' ')
     print(tabulate(df, headers='keys', tablefmt='github'))
 
@@ -31,13 +32,14 @@ def quartiles(div_of_N, Fi, FiKu, Xi_lp, Xi_length_range):
 
 
 def run_interval_series():
-    n = int(input('Wpisz rozmiar tablicy: '))
+    print('\n')
+    n = int(input('  Wpisz rozmiar tablicy: '))
     Xi_lp = list(map(int, input(
-        'Wpisz wartosci cechy (xdj) z (xdj; xgj] oddzielone spacja: ').strip().split()))[:n]
-    Xi_length_range = int(input('Wpisz dlugosc przedzilu: '))
+        '  Wpisz wartosci cechy (xdj) z (xdj; xgj] oddzielone spacja: ').strip().split()))[:n]
+    Xi_length_range = int(input('  Wpisz dlugosc przedzilu: '))
     Xi_rp = [i + Xi_length_range for i in Xi_lp]
     Fi = list(map(int, input(
-        'Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split()))[:n]
+        '  Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split()))[:n]
 
     # Xi_avg -----------------------------------------------------
     Xi_avg = [(i + j) / 2 for i, j in zip(Xi_lp, Xi_rp)]
@@ -107,7 +109,7 @@ def run_interval_series():
     df_interval_row_sum = pd.DataFrame(
         {'Fi': sum(Fi), 'Fi * Xi\'': sum(FiXi_avg),
          'Fi * Xi^2\'': sum(FiXi2_avg)},
-        index=['sum']
+        index=['suma wszystkich wartosci']
     ).astype(np.float64)
 
     df_interval_descriptive_measures = pd.DataFrame(
@@ -116,7 +118,7 @@ def run_interval_series():
          'Kwartyl gorny': Q3, 'wariancja': variance,
          'od standardowe': std, 'wsp zmiennosci': cv,
          'asymetria': asymmetry},
-        index=['measures']
+        index=['miary statystyki']
     ).astype(np.float64)
 
     # df_interval.to_csv('interval_series.csv', encoding='utf-8')
