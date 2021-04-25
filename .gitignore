@@ -2,7 +2,7 @@
 /helloJupyteripynb.ipynb
 # csv file
 /interval_series.csv
-# vscode file
-/.vscode
 # pycharm file
-.idea/
+*.iml
+.idea
+out
