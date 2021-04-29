@@ -1,3 +1,4 @@
+import decimal
 import math
 import os
 from point_series import run_point_series
@@ -6,6 +7,12 @@ from numpy.lib import median
 import pandas as pd
 from itertools import accumulate, product
 from tabulate import tabulate
+from decimal import Decimal
+
+
+def toDecimal(num, n):
+    num = Decimal(num)
+    return round(num, n)
 
 
 def display(df):
@@ -27,7 +34,7 @@ def quartiles(div_of_N, Fi, FiKu, Xi_lp, Xi_length_range):
     sum_preceding_Fiku_index = FiKu_index - 1
     sum_preceding_Fiku = FiKu[sum_preceding_Fiku_index]
     result = round(
-        Xs + (((n_div - sum_preceding_Fiku) * Xi_length_range) / Fi[Xs_index]), 2)
+        Xs + (((n_div - sum_preceding_Fiku) * Xi_length_range) / Fi[Xs_index]), 4)
     return result
 
 
@@ -40,6 +47,8 @@ def run_interval_series():
     Xi_rp = [i + Xi_length_range for i in Xi_lp]
     Fi = list(map(int, input(
         '  Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split()))[:n]
+    decimal_places = int(input('  Ile chcesz miec miejsc po pzecinku: '))
+    print('\n')
 
     # Xi_avg -----------------------------------------------------
     Xi_avg = [(i + j) / 2 for i, j in zip(Xi_lp, Xi_rp)]
@@ -84,10 +93,10 @@ def run_interval_series():
     Xm = Xi_lp[max_Fi_index]
     # Descriptive measures ********************************************************************************
     # Mean ------------------------------------------
-    average = round(df_interval.loc[:, 'Fi * Xi\''].sum() / sum(Fi), 2)
+    average = round(df_interval.loc[:, 'Fi * Xi\''].sum() / sum(Fi), 4)
     # Mode ------------------------------------------
     mode = round(Xm + ((max_Fi_value - prev_max_Fi_value) / ((max_Fi_value - prev_max_Fi_value)
-                                                             + (max_Fi_value - next_max_Fi_value))) * Xi_length_range, 2)
+                                                             + (max_Fi_value - next_max_Fi_value))) * Xi_length_range, 4)
 
     # Median -----------------------------------------
     median = quartiles(0.5, Fi, FiKu, Xi_lp, Xi_length_range)
@@ -99,9 +108,9 @@ def run_interval_series():
     variance = round((1 / df_interval.loc[:, 'Fi'].sum()) * df_interval.loc[:, 'Fi * Xi^2\''].sum()
                      - pow((average), 2), 4)
     # std --------------------------------------------
-    std = round(math.sqrt(variance), 2)
+    std = round(math.sqrt(variance), 4)
     # cv ---------------------------------------------
-    cv = round(std / abs(average) * 100, 2)
+    cv = round(std / abs(average) * 100, 4)
     # asymmetry --------------------------------------
     # ! if '-' - lewostronna, '+' - prawostronna, (silna, umierkowana, slaba)
     asymmetry = round(((average - mode) / std), 4)
@@ -113,11 +122,11 @@ def run_interval_series():
     ).astype(np.float64)
 
     df_interval_descriptive_measures = pd.DataFrame(
-        {'srednia': average, 'Me': median,
-         'Mo': mode, 'Kwartyl dolny': Q1,
-         'Kwartyl gorny': Q3, 'wariancja': variance,
-         'od standardowe': std, 'wsp zmiennosci': cv,
-         'asymetria': asymmetry},
+        {'srednia': toDecimal(average, decimal_places), 'Me': toDecimal(median, decimal_places),
+         'Mo': toDecimal(mode, decimal_places), 'Kwartyl dolny': toDecimal(Q1, decimal_places),
+         'Kwartyl gorny': toDecimal(Q3, decimal_places), 'wariancja': toDecimal(variance, decimal_places),
+         'od standardowe': toDecimal(std, decimal_places), 'wsp zmiennosci': toDecimal(cv, decimal_places),
+         'asymetria': toDecimal(asymmetry, decimal_places)},
         index=['miary statystyki']
     ).astype(np.float64)
 

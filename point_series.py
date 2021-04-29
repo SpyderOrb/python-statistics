@@ -4,6 +4,12 @@ import numpy as np
 import pandas as pd
 from itertools import accumulate
 from tabulate import tabulate
+from decimal import Decimal
+
+
+def toDecimal(num, n):
+    num = Decimal(num)
+    return round(num, n)
 
 
 def display(df):
@@ -19,6 +25,9 @@ def run_point_series():
         '  Wpisz wartosci cechy (xi) oddzielone spacja: ').strip().split()))[:n]
     Fi = list(map(int, input(
         '  Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split()))[:n]
+    decimal_places = int(input('  Ile chcesz miec miejsc po pzecinku: '))
+    print('\n')
+
     # Xi, Fi ---------------------------------------------------
     main_dict = {'Xi': Xi, 'Fi': Fi}
     # FiXi -----------------------------------------------------
@@ -45,10 +54,10 @@ def run_point_series():
 
     cumulative_series_dict = {'Xi': cumulative_series}
     df_cumulative_series = pd.DataFrame(
-        data=cumulative_series_dict, dtype=np.int64)
+        data=cumulative_series_dict, dtype=np.float64)
 
     # Сreating a dataframe
-    df_main = pd.DataFrame(data=main_dict, dtype=np.int64)
+    df_main = pd.DataFrame(data=main_dict, dtype=np.float64)
     df_main.index.name = 'id'
 
     # Descriptive measures *****************************************************************************
@@ -72,9 +81,9 @@ def run_point_series():
     ).astype(np.float64)
 
     df_descriptive_measures = pd.DataFrame(
-        {'srednia': avarage, 'Me': median,
-         'Mo': mode, 'wariancja': variance,
-         'od standardowe': std, 'wsp zmiennosci': cv},
+        {'srednia': toDecimal(avarage, decimal_places), 'Me': toDecimal(median, decimal_places),
+         'Mo': toDecimal(mode, decimal_places), 'wariancja': toDecimal(variance, decimal_places),
+         'od standardowe': toDecimal(std, decimal_places), 'wsp zmiennosci': toDecimal(cv, decimal_places)},
         index=['miary statystyki']
     ).astype(np.float64)
     # df_main.style.hide_index()
