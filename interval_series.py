@@ -32,7 +32,10 @@ def quartiles(div_of_N, Fi, FiKu, Xi_lp, Xi_length_range):
     Xs_index = FiKu_index = FiKu.index(Xs_value)
     Xs = Xi_lp[Xs_index]
     sum_preceding_Fiku_index = FiKu_index - 1
-    sum_preceding_Fiku = FiKu[sum_preceding_Fiku_index]
+    if(sum_preceding_Fiku_index >= 0):
+        sum_preceding_Fiku = FiKu[sum_preceding_Fiku_index]
+    else:
+        sum_preceding_Fiku = 0
     result = round(
         Xs + (((n_div - sum_preceding_Fiku) * Xi_length_range) / Fi[Xs_index]), 4)
     return result
@@ -79,15 +82,15 @@ def run_interval_series():
     max_Fi_index = Fi.index(max_Fi_value)
 
     prev_max_Fi_index = max_Fi_index - 1
-    try:
+    if(prev_max_Fi_index >= 0):
         prev_max_Fi_value = Fi[prev_max_Fi_index]
-    except IndexError:
+    else:
         prev_max_Fi_value = 0
 
     next_max_Fi_index = max_Fi_index + 1
-    try:
+    if(next_max_Fi_index >= 0):
         next_max_Fi_value = Fi[next_max_Fi_index]
-    except IndexError:
+    else:
         next_max_Fi_value = 0
 
     Xm = Xi_lp[max_Fi_index]

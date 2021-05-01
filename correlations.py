@@ -17,11 +17,13 @@ def run_correlations():
     # Współczynnik korelacji (korelogram)
     # Liniowa funkcja regresji
 
-    # n = int(input('Wpisz rozmiar tablicy: '))
-    # Xi = list(map(int, input('Wpisz wartosc cechy Xi oddzielone spacja: ').strip().split()))[:n]
-    # Yi = list(map(int, input('Wpisz wartosc cechy Yi oddzielone spacja: ').strip().split()))[:n]
-    Xi = [16, 25, 24, 50, 60]
-    Yi = [95, 163, 250, 297, 335]
+    n = int(input('Wpisz rozmiar tablicy: '))
+    Xi = list(map(int, input(
+        'Wpisz wartosc cechy Xi oddzielone spacja: ').strip().split()))[:n]
+    Yi = list(map(int, input(
+        'Wpisz wartosc cechy Yi oddzielone spacja: ').strip().split()))[:n]
+    # Xi = [16, 25, 24, 50, 60]
+    # Yi = [95, 163, 250, 297, 335]
 
     df_correlation = pd.DataFrame(list(zip(Xi, Yi)), columns=['Xi', 'Yi'])
     # Xi, Yi averages -----------------------------------------------------
@@ -70,7 +72,7 @@ def run_correlations():
          },
         index=['miary statystyki']
     ).astype(np.float64)
-    
+
     print(df_correlation, '\n')
     print(f'Xi srednia:  {Xi_avg} | Yi srednia: {Yi_avg}', '\n')
     print(df_correlation_row_sum, '\n')
