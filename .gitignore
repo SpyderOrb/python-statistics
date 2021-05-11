@@ -6,3 +6,5 @@
 *.iml
 .idea
 out
+/main.exe
+/icon.ico

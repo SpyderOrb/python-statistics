@@ -59,7 +59,7 @@ def run_interval_series():
     interval_dict = {'Fi': Fi, 'Xi\'': Xi_avg}
     # FiXi_avg ---------------------------------------------------
     FiXi_avg = [i * j for i, j in zip(Xi_avg, Fi)]
-    # FiKu ---------------------    ----------------------------------
+    # FiKu -------------------------------------------------------
     FiKu = list(accumulate(Fi))
     # Xi2_avg ----------------------------------------------------
     Xi2_avg = [i ** 2 for i in Xi_avg]
@@ -97,7 +97,7 @@ def run_interval_series():
     # Descriptive measures ********************************************************************************
     # Mean ------------------------------------------
     average = round(df_interval.loc[:, 'Fi * Xi\''].sum() / sum(Fi), 4)
-    # Mode ------------------------------------------
+    # Mode ------------------------------------------89
     mode = round(Xm + ((max_Fi_value - prev_max_Fi_value) / ((max_Fi_value - prev_max_Fi_value)
                                                              + (max_Fi_value - next_max_Fi_value))) * Xi_length_range, 4)
 
