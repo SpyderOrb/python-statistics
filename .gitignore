@@ -3,8 +3,8 @@
 # csv file
 /interval_series.csv
 # pycharm file
-*.iml
-.idea
+
+.idea/
 out
 main.exe
 icon.ico
