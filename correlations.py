@@ -13,6 +13,12 @@ def sign(b):
     return '-'
 
 
+def display(df):
+    print(' ')
+    print(tabulate(df, headers='keys', tablefmt='github'))
+    print('\n')
+
+
 def run_correlations():
     # Współczynnik korelacji (korelogram)
     # Liniowa funkcja regresji
@@ -73,11 +79,11 @@ def run_correlations():
         index=['miary statystyki']
     ).astype(np.float64)
 
-    print(df_correlation, '\n')
-    print(f'Xi srednia:  {Xi_avg} | Yi srednia: {Yi_avg}', '\n')
-    print(df_correlation_row_sum, '\n')
-    print(df_correlation_descriptive_measures, '\n')
-    print(f'Rownanie regresji: Y = {a} {sign(b)} {b} * X', '\n')
+    display(df_correlation)
+    print(f'Xi srednia:  {Xi_avg} | Yi srednia: {Yi_avg}')
+    display(df_correlation_row_sum)
+    display(df_correlation_descriptive_measures)
+    print(f'Rownanie regresji: Y = {a} {sign(b)} {b} * X')
 
     os.system('pause')
 
