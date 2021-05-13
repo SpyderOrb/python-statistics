@@ -10,7 +10,7 @@ from tabulate import tabulate
 from decimal import Decimal
 
 
-def toDecimal(num, n):
+def toDecimal(num, n=4):
     num = Decimal(num)
     return round(num, n)
 
@@ -50,7 +50,8 @@ def run_interval_series():
     Xi_rp = [i + Xi_length_range for i in Xi_lp]
     Fi = list(map(int, input(
         '  Wpisz liczebnosci (fi) z jakimi te wartosci wystepuja: ').strip().split()))[:n]
-    decimal_places = int(input('  Ile chcesz miec miejsc po pzecinku: '))
+    decimal_places = int(
+        input('  Ile chcesz miec miejsc po pzecinku: ') or "4")
     print('\n')
 
     # Xi_avg -----------------------------------------------------
