@@ -31,15 +31,15 @@ def run_correlations():
     # Liniowa funkcja regresji
 
     n = int(input('  Wpisz rozmiar tablicy: '))
-    # Xi = list(map(int, input(
-    #     '  Wpisz wartosc cechy Xi oddzielone spacja: ').strip().split()))[:n]
-    # Yi = list(map(int, input(
-    #     '  Wpisz wartosc cechy Yi oddzielone spacja: ').strip().split()))[:n]
+    Xi = list(map(int, input(
+        '  Wpisz wartosc cechy Xi oddzielone spacja: ').strip().split()))[:n]
+    Yi = list(map(int, input(
+        '  Wpisz wartosc cechy Yi oddzielone spacja: ').strip().split()))[:n]
     decimal_places = int(
         input('  Ile chcesz miec miejsc po pzecinku (wartosc domyslna to 4): ') or "4")
 
-    Xi = [16, 25, 24, 50, 60]
-    Yi = [95, 163, 250, 297, 335]
+    # Xi = [16, 25, 24, 50, 60]
+    # Yi = [95, 163, 250, 297, 335]
 
     # Сreating a dataframe
     df_correlation = pd.DataFrame(list(zip(Xi, Yi)), columns=['Xi', 'Yi'])
