@@ -28,7 +28,6 @@ def display(df):
 
 def run_correlations():
     # Współczynnik korelacji (korelogram)
-    # Liniowa funkcja regresji
 
     n = int(input('  Wpisz rozmiar tablicy: '))
     Xi = list(map(int, input(
