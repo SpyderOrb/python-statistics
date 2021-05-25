@@ -84,7 +84,7 @@ def run_correlations():
         deltaYr = 'skipped...'
 
     # Prognozowanie -------------------------------------------------------
-    print('  Wpisz wartosc predykatora X*:', end=' ')
+    print('  Wpisz wartosc predykatora X* (wpisz 0 jezeli nie chcech):', end=' ')
     Xpredictor = int(input() or "0")
     if (Xpredictor != 0):
         Ypredictor = a + b * Xpredictor
