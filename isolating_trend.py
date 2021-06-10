@@ -33,12 +33,12 @@ def run_isolating_trend():
     year1 = int(input(
         '  Wpisz pierwszy rok (lub numer misiaca itd): '))
     years_list = list(range(year1, year1+t))
-    # Yt = list(map(int, input(
-    #     '  Wpisz wartosc cechy Yt oddzielone spacja: ').strip().split()))[:t]
+    Yt = list(map(int, input(
+        '  Wpisz wartosc cechy Yt oddzielone spacja: ').strip().split()))[:t]
     decimal_places = int(
         input('  Ile chcesz miec miejsc po pzecinku (wartosc domyslna to 4): ') or "4")
 
-    Yt = [50, 52, 45, 62, 69, 50, 72, 75]
+    # Yt = [50, 52, 45, 62, 69, 50, 72, 75]
 
     # Сreating a dataframe
     df_correlation = pd.DataFrame({'t': t_list, 'Czas': years_list, 'Yt': Yt})
@@ -82,7 +82,7 @@ def run_isolating_trend():
     #     deltaYr = 'skipped...'
 
     # Prognozowanie -------------------------------------------------------
-    print('  Wpisz numer okresu prognozy T (wpisz 0 jezeli nie chcech):', end=' ')
+    print('  Wpisz numer okresu prognozy T (wpisz 0 jezeli nie chcesz):', end=' ')
     Tpredictor = int(input() or "0")
     if (Tpredictor != 0):
         Yt_predictor = a + b * Tpredictor
@@ -159,4 +159,3 @@ def run_isolating_trend():
 
 if __name__ == "__main__":
     run_isolating_trend()
-    os.system("pause")

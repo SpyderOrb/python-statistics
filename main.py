@@ -2,6 +2,7 @@ import os
 import point_series
 import interval_series
 import correlations
+import isolating_trend
 logo = '''
 
     _____ __        __             __        __                        _
@@ -35,6 +36,7 @@ def main():
       1 - szereg wazony (rozdzielczy punktowy)
       2 - szereg rozdzielczy przedziałowy
       3 - wspolzaleznosc liniowa dwoch cech
+      4 - wyodrębniania trendu w szeregach czasowych
 
     Nacisnij dowolny klawisz aby zamknac.
     ''')
@@ -59,6 +61,14 @@ def main():
         cls()
         try:
             correlations.run_correlations()
+        except Exception as ex:
+            print('\n\t', ex, '---> (Innymi slowy, wystapil blad, zacznij od nowa...)')
+            go_back()
+        go_back(argument)
+    elif (argument == 4):
+        cls()
+        try:
+            isolating_trend.run_isolating_trend()
         except Exception as ex:
             print('\n\t', ex, '---> (Innymi slowy, wystapil blad, zacznij od nowa...)')
             go_back()
