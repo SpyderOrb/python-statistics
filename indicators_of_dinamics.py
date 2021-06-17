@@ -72,7 +72,11 @@ def run_indicators_of_dinamics():
 
     # Average rate of changes of the phenomenon over time ----------------
     G = pow((Yt[t-1] / Yt[0]), 1/(t-1))
-    G_proc = (G - 1) * 100
+    G_proc = (1 - G) * 100
+    if (G_proc > 0):
+        say_something = "zwiekszyly"
+    else:
+        say_something = "zmniejszyly"
 
     # Prediction
     print('  Wpisz numer okresu prognozy T (wpisz 0 jezeli nie chcesz):', end=' ')
@@ -95,7 +99,7 @@ def run_indicators_of_dinamics():
     display(df_dynamics_of_phenomena)
     display(df_dynamics_of_phenomena_descriptive_measures)
     print(
-        f'  Interpretacja G: Z roku na rok w latah {years_list[0]}-{years_list[-1]} (...wpisz tu znaczenie Yt) zwiekszyly sie srednio ok. {G_proc}.')
+        f'  Interpretacja G: Z roku na rok w latah {years_list[0]}-{years_list[-1]} (...wpisz tu znaczenie Yt) {say_something} sie srednio ok. {G_proc}.')
     print('  Yp: ', Yt_predictorR)
 
 
