@@ -72,7 +72,7 @@ def run_indicators_of_dinamics():
 
     # Average rate of changes of the phenomenon over time ----------------
     G = pow((Yt[t-1] / Yt[0]), 1/(t-1))
-    G_proc = (1 - G) * 100
+    G_proc = (G - 1) * 100
     if (G_proc > 0):
         say_something = "zwiekszyly"
     else:
