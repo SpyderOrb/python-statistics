@@ -3,6 +3,8 @@ import point_series
 import interval_series
 import correlations
 import isolating_trend
+import indicators_of_dinamics
+import measures_interdependence_qualitative_characteristics
 logo = '''
 
     _____ __        __             __        __                        _
@@ -35,8 +37,10 @@ def main():
 
       1 - szereg wazony (rozdzielczy punktowy)
       2 - szereg rozdzielczy przedziałowy
-      3 - wspolzaleznosc liniowa dwoch cech
+      3 - wspolzaleznosc liniowa dwoch cech (koralacja)
       4 - wyodrębniania trendu w szeregach czasowych
+      5 - indywidualne wskażniki dynamiki
+      6 - miary współzależności cech jakościowych (tabele kontyngencji)
 
     Nacisnij dowolny klawisz aby zamknac.
     ''')
@@ -69,6 +73,14 @@ def main():
         cls()
         try:
             isolating_trend.run_isolating_trend()
+        except Exception as ex:
+            print('\n\t', ex, '---> (Innymi slowy, wystapil blad, zacznij od nowa...)')
+            go_back()
+        go_back(argument)
+    elif (argument == 5):
+        cls()
+        try:
+            indicators_of_dinamics.run_indicators_of_dinamics()
         except Exception as ex:
             print('\n\t', ex, '---> (Innymi slowy, wystapil blad, zacznij od nowa...)')
             go_back()

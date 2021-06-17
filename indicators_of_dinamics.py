@@ -34,37 +34,39 @@ def run_indicators_of_dinamics():
     year1 = int(input(
         '  Wpisz pierwszy rok (lub numer misiaca itd): '))
     years_list = list(range(year1, year1+t))
-    # Yt = list(map(int, input(
-    #     '  Wpisz wartosc cechy Yt oddzielone spacja: ').strip().split()))[:t]
+    Yt = list(map(int, input(
+        '  Wpisz wartosc cechy Yt oddzielone spacja: ').strip().split()))[:t]
     decimal_places = int(
         input('  Ile chcesz miec miejsc po pzecinku (wartosc domyslna to 4): ') or "4")
-
-    Yt = [50, 52, 45, 62, 69, 50, 72, 75]
 
     # Creating a dataframe
     df_dynamics_of_phenomena = pd.DataFrame(
         {'t': t_list, 'Czas': years_list, 'Yt': Yt})
     # --------------------------------------------------------------------
     # yt - y0 ------------------------------------------------------------
-    yt_diff_t0 = [(Yt[i] - Yt[0]) for i in range(len(Yt))]
+    yt_diff_t0 = [round((Yt[i] - Yt[0]), decimal_places)
+                  for i in range(len(Yt))]
     df_dynamics_of_phenomena['yt - y0'] = yt_diff_t0
     # yt - yt-1 ----------------------------------------------------------
-    yt_diff_tMinus1 = [(Yt[i] - Yt[i-1]) for i in range(len(Yt))]
+    yt_diff_tMinus1 = [round((Yt[i] - Yt[i-1])) for i in range(len(Yt))]
     yt_diff_tMinus1[0] = np.nan
     df_dynamics_of_phenomena['yt - yt-1'] = yt_diff_tMinus1
     # (yt - y0) / y0 * 100 -----------------------------------------------
-    yt_diff_t0_div_t0 = [((Yt[i] - Yt[0])/Yt[0] * 100) for i in range(len(Yt))]
+    yt_diff_t0_div_t0 = [round(((Yt[i] - Yt[0])/Yt[0] * 100))
+                         for i in range(len(Yt))]
     df_dynamics_of_phenomena['(yt - y0)/y0 * 100'] = yt_diff_t0_div_t0
     # (yt - yt-1) / yt-1 * 100 -------------------------------------------
     yt_diff_tMinus1_div_tMinus1 = [
-        ((Yt[i] - Yt[i-1])/Yt[i-1] * 100) for i in range(len(Yt))]
+        round(((Yt[i] - Yt[i-1])/Yt[i-1] * 100)) for i in range(len(Yt))]
     yt_diff_tMinus1_div_tMinus1[0] = np.nan
     df_dynamics_of_phenomena['(yt - yt-1)/yt-1 * 100'] = yt_diff_tMinus1_div_tMinus1
     # yt / y0 * 100 ------------------------------------------------------
-    yt_div_y0 = [(Yt[i]/Yt[0] * 100) for i in range(len(Yt))]
+    yt_div_y0 = [round((Yt[i]/Yt[0] * 100), decimal_places)
+                 for i in range(len(Yt))]
     df_dynamics_of_phenomena['yt / y0 * 100'] = yt_div_y0
     # yt / yt-1 * 100 ----------------------------------------------------
-    yt_div_yMinus1 = [(Yt[i]/Yt[i-1] * 100) for i in range(len(Yt))]
+    yt_div_yMinus1 = [round((Yt[i]/Yt[i-1] * 100), decimal_places)
+                      for i in range(len(Yt))]
     yt_div_yMinus1[0] = np.nan
     df_dynamics_of_phenomena['yt / yt-1 * 100'] = yt_div_yMinus1
 
@@ -99,4 +101,3 @@ def run_indicators_of_dinamics():
 
 if __name__ == "__main__":
     run_indicators_of_dinamics()
-    os.system("pause")

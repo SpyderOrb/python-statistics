@@ -45,8 +45,8 @@ def run_correlations():
 
     # Xi, Yi averages -----------------------------------------------------
     # ---------------------------------------------------------------------
-    Xi_avg = df_correlation.loc[:, 'Xi'].mean()
-    Yi_avg = df_correlation.loc[:, 'Yi'].mean()
+    Xi_avg = round(df_correlation.loc[:, 'Xi'].mean(), decimal_places)
+    Yi_avg = round(df_correlation.loc[:, 'Yi'].mean(), decimal_places)
 
     # Xi - Xi_avg, Yi - Yi_avg, -------------------------------------------
     Xi_diff_Xi_avg = [(i - Xi_avg) for i in Xi]
@@ -56,12 +56,12 @@ def run_correlations():
 
     # (Xi - Xi_avg) * (Yi - Yi_avg) ---------------------------------------
     Xi_diff_Xi_avg_MULT_Yi_diff_Yi_avg = [
-        i * j for i, j in zip(Xi_diff_Xi_avg, Yi_diff_Yi_avg)]
+        round(i * j, decimal_places) for i, j in zip(Xi_diff_Xi_avg, Yi_diff_Yi_avg)]
     df_correlation['(Xi-Xi_avg)(Yi-Yi_avg)'] = Xi_diff_Xi_avg_MULT_Yi_diff_Yi_avg
 
     # (Xi - Xi_avg)^2, (Yi - Yi_avg)^2 ------------------------------------
-    Xi_diff_Xi_avg2 = [i ** 2 for i in Xi_diff_Xi_avg]
-    Yi_diff_Yi_avg2 = [i ** 2 for i in Yi_diff_Yi_avg]
+    Xi_diff_Xi_avg2 = [round(i ** 2, decimal_places) for i in Xi_diff_Xi_avg]
+    Yi_diff_Yi_avg2 = [round(i ** 2, decimal_places) for i in Yi_diff_Yi_avg]
     df_correlation['(Xi-Xi_avg)^2'] = Xi_diff_Xi_avg2
     df_correlation['(Yi-Yi_avg)^2'] = Yi_diff_Yi_avg2
 
@@ -76,7 +76,7 @@ def run_correlations():
 
     # Zmiana wartosci cechy ΔX---------------------------------------------
     print('  Chcesz podac zmiany wartosci cechy ΔX (wpisz 0 jezeli nie chcech):', end=' ')
-    deltaX = int(input() or "0")
+    deltaX = float(input() or "0")
     if (deltaX != 0):
         deltaY = b * deltaX
         deltaYr = toRoundDecimal(deltaY, decimal_places)
@@ -85,7 +85,7 @@ def run_correlations():
 
     # Prognozowanie -------------------------------------------------------
     print('  Wpisz wartosc predykatora X* (wpisz 0 jezeli nie chcech):', end=' ')
-    Xpredictor = int(input() or "0")
+    Xpredictor = float(input() or "0")
     if (Xpredictor != 0):
         Ypredictor = a + b * Xpredictor
         YpredictorR = toRoundDecimal(Ypredictor, decimal_places)
@@ -93,10 +93,11 @@ def run_correlations():
         YpredictorR = 'skipped...'
 
     # ŷ, Yi - ŷ, (Yi - ŷ)^2 -----------------------------------------------
-    Yteoretyczne = [(a + b * i) for i in Xi]
+    Yteoretyczne = [round((a + b * i), decimal_places) for i in Xi]
     df_correlation['ŷ'] = Yteoretyczne
     Yi_diff_Yteoretyczne = [(i - j) for i, j in zip(Yi, Yteoretyczne)]
-    Yi_diff_Yteoretyczne2 = [i ** 2 for i in Yi_diff_Yteoretyczne]
+    Yi_diff_Yteoretyczne2 = [round(i ** 2, decimal_places)
+                             for i in Yi_diff_Yteoretyczne]
     df_correlation['(Yi - ŷ)^2'] = Yi_diff_Yteoretyczne2
     # Wariancja resztowa --------------------------------------------------
     Se2 = (1/(n-2) * sum(Yi_diff_Yteoretyczne2))
@@ -121,10 +122,10 @@ def run_correlations():
 
     # Dataframes
     df_correlation_row_sum = pd.DataFrame(
-        {'(Xi-Xi_avg)(Yi-Yi_avg)': sum(Xi_diff_Xi_avg_MULT_Yi_diff_Yi_avg),
-         '(Xi-Xi_avg)^2': sum(Xi_diff_Xi_avg2),
-         '(Yi-Yi_avg)^2': sum(Yi_diff_Yi_avg2),
-         '(Yi - ŷ)^2': sum(Yi_diff_Yteoretyczne2)
+        {'(Xi-Xi_avg)(Yi-Yi_avg)': toRoundDecimal(sum(Xi_diff_Xi_avg_MULT_Yi_diff_Yi_avg), decimal_places),
+         '(Xi-Xi_avg)^2': toRoundDecimal(sum(Xi_diff_Xi_avg2), decimal_places),
+         '(Yi-Yi_avg)^2': toRoundDecimal(sum(Yi_diff_Yi_avg2), decimal_places),
+         '(Yi - ŷ)^2': toRoundDecimal(sum(Yi_diff_Yteoretyczne2), decimal_places)
          },
         index=['sum']
     )

@@ -45,22 +45,22 @@ def run_isolating_trend():
 
     # Yt, t average -----------------------------------------------------
     # ---------------------------------------------------------------------
-    Yt_avg = df_correlation.loc[:, 'Yt'].mean()
+    Yt_avg = round(df_correlation.loc[:, 'Yt'].mean(), decimal_places)
     t_avg = df_correlation.loc[:, 't'].mean()
 
     # t - t_avg, Yt - Yt_avg, -------------------------------------------
-    t_diff_t_avg = [(i - t_avg) for i in t_list]
-    Yt_diff_Yt_avg = [(i - Yt_avg) for i in Yt]
+    t_diff_t_avg = [round((i - t_avg), decimal_places) for i in t_list]
+    Yt_diff_Yt_avg = [round((i - Yt_avg), decimal_places) for i in Yt]
     df_correlation['t-t_avg'] = t_diff_t_avg
     df_correlation['Yt-Yt_avg'] = Yt_diff_Yt_avg
 
     # (t - t_avg) * (Yt - Yt_avg) ---------------------------------------
     t_diff_t_avg_MULT_Yt_diff_Yt_avg = [
-        i * j for i, j in zip(t_diff_t_avg, Yt_diff_Yt_avg)]
+        round(i * j, decimal_places) for i, j in zip(t_diff_t_avg, Yt_diff_Yt_avg)]
     df_correlation['(t-t_avg)(Yt-Yt_avg)'] = t_diff_t_avg_MULT_Yt_diff_Yt_avg
 
     # (t - t_avg)^2 ------------------------------------
-    t_diff_t_avg2 = [i ** 2 for i in t_diff_t_avg]
+    t_diff_t_avg2 = [round((i ** 2), decimal_places) for i in t_diff_t_avg]
     df_correlation['(t-t_avg)^2'] = t_diff_t_avg2
 
     # Descriptive measures ********************************************************************************
@@ -91,14 +91,15 @@ def run_isolating_trend():
         Yt_predictorR = 'skipped...'
 
     # ŷt, Yt - ŷt, (Yt - ŷt)^2, (Yt - Y_avg)^2 -----------------------------------------------
-    Yt_teoretyczne = [(a + b * i) for i in t_list]
+    Yt_teoretyczne = [round((a + b * i), decimal_places) for i in t_list]
     df_correlation['ŷt'] = Yt_teoretyczne
 
     Yt_diff_Yt_teoretyczne = [(i - j) for i, j in zip(Yt, Yt_teoretyczne)]
-    Yt_diff_Yt_teoretyczne2 = [i ** 2 for i in Yt_diff_Yt_teoretyczne]
+    Yt_diff_Yt_teoretyczne2 = [
+        round((i ** 2), decimal_places) for i in Yt_diff_Yt_teoretyczne]
     df_correlation['(Yt - ŷ)^2'] = Yt_diff_Yt_teoretyczne2
 
-    Yt_diff_Yt_avg2 = [i ** 2 for i in Yt_diff_Yt_avg]
+    Yt_diff_Yt_avg2 = [round((i ** 2), decimal_places) for i in Yt_diff_Yt_avg]
     df_correlation['(Yt - Yt_avg)^2'] = Yt_diff_Yt_avg2
 
     # Wariancja resztowa --------------------------------------------------
