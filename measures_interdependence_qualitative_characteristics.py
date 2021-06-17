@@ -30,17 +30,15 @@ def display(df):
 
 def run_measures_interdependence():
 
-    # w = int(input("Wpisz ilość wiersz: "))
-    # k = int(input("Wpisz ilosc kolumn: "))
-    # matrix_list = [[int(input(f"Wpisz wartosc dla (wiersz)-{i+1} (kolumna)-{j+1}: "))
-    #                 for j in range(k)] for i in range(w)]
-
-    #
+    w = int(input("Wpisz ilość wiersz: "))
+    k = int(input("Wpisz ilosc kolumn: "))
+    matrix_list = [[int(input(f"Wpisz wartosc dla (wiersz)-{i+1} (kolumna)-{j+1}: "))
+                    for j in range(k)] for i in range(w)]
     decimal_places = int(
         input('  Ile chcesz miec miejsc po pzecinku (wartosc domyslna to 4): ') or "4")
-    w = 3
-    k = 2
-    matrix_list = [[360, 164], [308, 75], [132, 36]]
+    # w = 3
+    # k = 2
+    # matrix_list = [[360, 164], [308, 75], [132, 36]]
     #
 
     df_matrix = pd.DataFrame()
