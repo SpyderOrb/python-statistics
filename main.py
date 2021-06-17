@@ -85,6 +85,14 @@ def main():
             print('\n\t', ex, '---> (Innymi slowy, wystapil blad, zacznij od nowa...)')
             go_back()
         go_back(argument)
+    elif (argument == 6):
+        cls()
+        try:
+            measures_interdependence_qualitative_characteristics.run_measures_interdependence()
+        except Exception as ex:
+            print('\n\t', ex, '---> (Innymi slowy, wystapil blad, zacznij od nowa...)')
+            go_back()
+        go_back(argument)
     else:
         print('nieznany argument, sprobuj ponownie...')
         go_back()
