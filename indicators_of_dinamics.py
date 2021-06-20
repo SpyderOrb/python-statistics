@@ -52,12 +52,12 @@ def run_indicators_of_dinamics():
     yt_diff_tMinus1[0] = np.nan
     df_dynamics_of_phenomena['yt - yt-1'] = yt_diff_tMinus1
     # (yt - y0) / y0 * 100 -----------------------------------------------
-    yt_diff_t0_div_t0 = [round(((Yt[i] - Yt[0])/Yt[0] * 100))
+    yt_diff_t0_div_t0 = [round(((Yt[i] - Yt[0])/Yt[0] * 100), decimal_places)
                          for i in range(len(Yt))]
     df_dynamics_of_phenomena['(yt - y0)/y0 * 100'] = yt_diff_t0_div_t0
     # (yt - yt-1) / yt-1 * 100 -------------------------------------------
     yt_diff_tMinus1_div_tMinus1 = [
-        round(((Yt[i] - Yt[i-1])/Yt[i-1] * 100)) for i in range(len(Yt))]
+        round(((Yt[i] - Yt[i-1])/Yt[i-1] * 100), decimal_places) for i in range(len(Yt))]
     yt_diff_tMinus1_div_tMinus1[0] = np.nan
     df_dynamics_of_phenomena['(yt - yt-1)/yt-1 * 100'] = yt_diff_tMinus1_div_tMinus1
     # yt / y0 * 100 ------------------------------------------------------
